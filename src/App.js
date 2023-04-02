@@ -1,24 +1,51 @@
-import logo from './logo.svg';
+import Navbar from './components/header/Navbar'
 import './App.css';
-
+import Newnav from './components/newnavbar/Newnav'
+import Maincomp from './components/home/Maincomp'
+import Footer from './components/footer/Footer'
+import Sign_in from './components/signup_signin/Sign_in'
+import SignUp from './components/signup_signin/SignUp'
+import Cart from './components/cart/Cart'
+import Buynow from './components/buynow/Buynow'
+import { Routes, Route } from 'react-router-dom'
+import CircularProgress from '@mui/material/CircularProgress';
+import { useState, useEffect } from 'react';
 function App() {
+  const [data, setData] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setData(true);
+    }, 2000);
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {
+        data ? (
+          <>
+            <Navbar />
+            <Newnav />
+            <Routes>
+              <Route path='/' element={<Maincomp />} />
+              <Route path='/login' element={<Sign_in />} />
+              <Route path='/register' element={<SignUp />} />
+              <Route path='/getproductsone/:id' element={<Cart />} />
+              <Route path='/buynow' element={<Buynow />} />
+            </Routes>
+            {/* <Maincomp/> */}
+            <Footer />
+          </>
+        ) : (
+          <div className='circle'>
+            <CircularProgress />
+            <h2>Loading...</h2>
+          </div>
+        )
+      }
+
+    </>
+
   );
 }
 
